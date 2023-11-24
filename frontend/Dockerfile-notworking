@@ -1,0 +1,27 @@
+# based on 9-tips-for-containerizing-your-node-js-application by docker.com
+FROM node:lts-buster
+
+RUN mkdir -p /usr/app
+WORKDIR /usr/app
+
+COPY package.json ./package.json
+COPY package-lock.json ./package-lock.json
+COPY webpack.config.js ./webpack.config.js
+
+RUN npm update
+RUN npm init @eslint/config
+
+#RUN npm ci
+RUN npm install -g n
+RUN n stable
+RUN n latest
+
+#RUN npm audit fix
+RUN npm audit fix --force
+
+COPY . .
+
+EXPOSE 8000
+
+CMD ["npm", "start"]
+
