@@ -11,9 +11,10 @@ COPY package.json ./package.json
 COPY package-lock.json ./package-lock.json
 
 #RUN npm ci
-RUN npm install
 
 COPY . .
+
+RUN npm install
 
 EXPOSE 9000
 RUN echo $APPID
